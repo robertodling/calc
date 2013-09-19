@@ -29,9 +29,11 @@ Incorrectly nested parenthesis will throw ``IncorrectlyNested``.
 
 ```
 
-calc.evaluate('3+4-5*6/6');			// 6
+calc.evaluate('3+4-5*6/6');			  // 6
 
 calc.evaluate('2+2*(6/2+(1+3))');	// 16
+
+calc.evaluate('((2 + 2)');        // "IncorrectlyNested"
 
 calc.evaluate('((2   +   2 * (   6 / 2  + I am evil (=)()()()((1+3)))))');	// 16
 
