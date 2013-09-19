@@ -1,7 +1,7 @@
 // assumes we are running in top scope
 var calc = calc || {};
 
-calc.validate = (function () {
+calc._validate = (function () {
 
 	var patterns = {
 		leftParenthesis: /\(/g,

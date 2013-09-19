@@ -3,7 +3,7 @@ describe('Validating expression', function () {
 
 	'use strict';
 
-	var validate = calc.validate;
+	var validate = calc._validate;
 
 	function expectNotThrows(expression, exception) {
 		expect(function () {

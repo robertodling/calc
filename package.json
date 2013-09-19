@@ -1,6 +1,6 @@
 {
 	"name": "calc",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Calculator which evaluates nested arithmetic expressions.",
 	"main": "karma start",
 	"dependencies": {

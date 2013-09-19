@@ -1,7 +1,7 @@
 // assumes we are running in top scope
 var calc = calc || {};
 
-calc.split = (function () {
+calc._split = (function () {
 
 	function _isOpeningBracket(character) {
 		return character === '(';
@@ -20,6 +20,7 @@ calc.split = (function () {
 	}
 
 	function splitTopLevel(expression, operand) {
+
 		var bracketBalance = 0,
 			expressions = [],
 			expressionBegin = 0,

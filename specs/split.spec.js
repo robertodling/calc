@@ -3,13 +3,7 @@ describe('Splitting expression', function () {
 
 	'use strict';
 
-	var split = calc.split;
-
-	function expectThrows(expression, exception) {
-		expect(function () {
-			validate(expression);
-		}).to.throw(exception);
-	}
+	var split = calc._split;
 
 	var splitCases = [
 		/*
