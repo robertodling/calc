@@ -33,15 +33,6 @@ describe('Validating expression', function () {
 			});
 	});
 
-	describe('InvalidCharacters', function () {
-
-		['a', '?'].
-			forEach(function (expression) {
-				it('should should not allow ' + expression, function () {
-					expectThrows(expression, 'InvalidCharacters');
-				});
-			});
-	});
 
 	describe('IncorrectlyNested', function () {
 		['('].

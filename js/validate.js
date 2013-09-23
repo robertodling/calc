@@ -4,34 +4,34 @@ var calc = calc || {};
 calc._validate = (function () {
 
 	var patterns = {
-		leftParenthesis: /\(/g,
-		rightParenthesis: /\)/g,
-		invalidCharacters: /[^0-9\+\-\*\/\(\)\s]/
+		openingSymbol: /\(/g,
+		closingSymbol: /\)/g
 	};
 
 	function _isEmpty(expression) {
 		return !expression;
 	}
 
-	function _containsInvalidCharacters(expression) {
-		return patterns.invalidCharacters.test(expression);
+	function _openingCount(expression) {
+		var matches = expression.match(patterns.openingSymbol);
+		return  matches && matches.length || 0;
+	}
+
+	function _closingCount(expression) {
+		var matches = expression.match(patterns.closingSymbol);
+		return  matches && matches.length || 0;
 	}
 
 	function _isCorrectlyNested(expression) {
-		var leftPMatches = expression.match(patterns.leftParenthesis),
-			leftPCount = leftPMatches && leftPMatches.length,
-			rightPMatches = expression.match(patterns.rightParenthesis),
-			rightPCount = rightPMatches && rightPMatches.length;
 
-		return leftPCount && rightPCount && leftPCount === rightPCount || !leftPCount && ! rightPCount;
+		return _openingCount(expression) === _closingCount(expression);
 	}
 
 
 	function validate(expression) {
+
 		if (_isEmpty(expression)) {
 			throw new Error('EmptyExpression')
-		} else if (_containsInvalidCharacters(expression)) {
-			throw new Error('InvalidCharacters')
 		} else if (!_isCorrectlyNested(expression)) {
 			throw new Error('IncorrectlyNested')
 		}
