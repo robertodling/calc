@@ -1,3 +1,14 @@
+/**
+ * calc - Calculator that evaluates nested arithmetic expressions.
+ *
+ * _expression - "Class" representing expression. Exposes constructor method.
+ *
+ * @license calc
+ * (c) Robert Ödling https://github.com/robertodling/calc
+ * License: MIT (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+// assumes we are running in top scope
 var calc = calc || {};
 
 calc._expression = (function () {
@@ -20,10 +31,6 @@ calc._expression = (function () {
 
 	function _isClosingSymbol(c) {
 		return  c === ')';
-	}
-
-	function _isAtSplit(c, symbol, depth) {
-		return c === symbol && depth === 0;
 	}
 
 
@@ -49,14 +56,28 @@ calc._expression = (function () {
 			return parseFloat(this.value);
 		},
 
+		/**
+		 * Split expression on provided symbol (operator symbol).
+		 * Will split on rightmost operand to guarantee left to right precedence.
+		 */
+
 		split: function (symbol) {
 			var expression = this.value;
 			var i = expression.length;
 			var depth = 0;
 
+			var left = [];
+			var right = [];
+
+			// loop through string backwards
 			while (i > 0) {
 				var c = expression.charAt(i);
-				if (_isAtSplit(c, symbol, depth)) {
+
+				right.unshift(c);
+				// we
+				var splitFound = c === symbol && depth === 0;
+				left.push(c);
+				if (splitFound) {
 					return _getSplit(expression, i);
 				} else if (_isOpeningSymbol(c)) {
 					depth++;
@@ -69,39 +90,30 @@ calc._expression = (function () {
 		},
 
 		peel: function () {
-			var expression = this.value;
-			var peeledChars = [];
+
+			var expression = this.value.split('');
 			var depth = 0;
-			for (var i = 0; i < expression.length; i++) {
-				var c = expression.charAt(i);
+			this.value = expression.filter(function (character) {
 
-				if (_isOpeningSymbol(c)) {
+				if (_isOpeningSymbol(character)) {
 					depth++;
-				} else if (_isClosingSymbol(c)) {
+					return depth > 1;
+				} else if (_isClosingSymbol(character)) {
 					depth--;
+					return depth > 0
 				}
-				var isTopLevelOpening = (depth === 1 && _isOpeningSymbol(c));
-				var isTopLevelClosing = (depth === 0 && _isClosingSymbol(c));
-				if (!isTopLevelOpening && !isTopLevelClosing) {
-					peeledChars.push(c);
-				}
-			}
 
-			this.value = peeledChars.join('');
+				return true;
+
+			}).join('');
+
 		},
 
 		scrub: function () {
-			var expression = this.value;
-			var scrubbedChars = [];
-			for (var i = 0; i < expression.length; i++) {
-				var c = expression.charAt(i);
-
-				if (_isValidSymbol(c)) {
-					scrubbedChars.push(c);
-				}
-			}
-
-			this.value = scrubbedChars.join('');
+			var expression = this.value.split('');
+			this.value = expression.filter(function (character) {
+				return _isValidSymbol(character)
+			}).join('');
 
 		}
 

@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Sep 19 2013 12:01:23 GMT+0200 (W. Europe Daylight Time)
+// Generated on Thu Sep 12 2013 20:26:59 GMT+0200 (W. Europe Daylight Time)
 
 module.exports = function (config) {
 	config.set({
@@ -9,14 +9,21 @@ module.exports = function (config) {
 
 
 		// frameworks to use
-		frameworks: ['mocha','chai'],
+		frameworks: ['mocha', 'chai'],
 
 
 		// list of files / patterns to load in the browser
 		files: [
-			'js/**/*.js',
+			'src/**/*.js',
 			'specs/**/*.js'
 		],
+
+		preprocessors: {
+			// source files, that you wanna generate coverage for
+			// do not include tests or libraries
+			// (these files will be instrumented by Istanbul)
+			'src/*.js': ['coverage']
+		},
 
 
 		// list of files to exclude
@@ -27,7 +34,7 @@ module.exports = function (config) {
 
 		// test results reporter to use
 		// possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-		reporters: ['progress'],
+		reporters: ['progress', 'coverage'],
 
 
 		// web server port
@@ -55,7 +62,7 @@ module.exports = function (config) {
 		// - Safari (only Mac)
 		// - PhantomJS
 		// - IE (only Windows)
-		browsers: ['Chrome'],
+		browsers: [],
 
 
 		// If browser does not capture in given timeout [ms], kill it

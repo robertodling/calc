@@ -12,7 +12,6 @@ calc._operands = (function () {
 
 		'*': function (left, right) {
 			return left * right;
-
 		},
 
 		'/': function (left, right) {
@@ -20,24 +19,25 @@ calc._operands = (function () {
 		}
 	};
 
-	var order = ['+', '-', '*', '/'];
+	var operatorPrecedence = ['+', '-', '*', '/'];
+
 	function iterator() {
 		var i = 0;
-		var length = order.length;
+		var length = operatorPrecedence.length;
 		return {
 			next: function () {
-				var symbol = order[i];
+				var symbol = operatorPrecedence[i];
 				var operand = operands[ symbol];
-
-					operand.symbol=symbol;
+				operand.symbol = symbol;
 				i++;
-				return operand ;
+				return operand;
 			},
 			hasNext: function () {
 				return i < length;
 			}
 		}
 	}
+
 	return {
 		iterator: iterator
 	}
